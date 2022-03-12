@@ -4,7 +4,7 @@ from lasers import Laser
 from vector import Vector
 
 
-LEFT, RIGHT, UP, DOWN, STOP = 'left', 'right', 'up', 'down', 'stop'
+LEFT, RIGHT, STOP = 'left', 'right', 'stop'
 
 dirs = {LEFT: Vector(-1, 0),
         RIGHT: Vector(1, 0),
@@ -15,6 +15,8 @@ dir_keys = {pg.K_LEFT: LEFT, pg.K_a: LEFT,
 
 
 def check_events(game):
+    laser_sound = pg.mixer.Sound("audio/laser.wav")
+    laser_sound.set_volume(0.1)
     ship = game.ship
     for e in pg.event.get():
         if e.type == pg.QUIT:
@@ -24,6 +26,7 @@ def check_events(game):
                 v = dirs[dir_keys[e.key]]
                 ship.inc_add(v)
             elif e.key == pg.K_SPACE:
+                laser_sound.play()
                 new_laser = Laser(game)
                 game.lasers.add(new_laser)
         elif e.type == pg.KEYUP:

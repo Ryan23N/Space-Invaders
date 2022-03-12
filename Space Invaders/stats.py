@@ -43,6 +43,8 @@ class Stats:
 
     def level_up(self):
         self.level += 1
+        self.settings.alien_speed_factor += .4
+        self.settings.fleet_drop_speed += .2
         print("leveling up: level is now ", self.level)
 
     def alien_hit(self, alien):

@@ -1,3 +1,5 @@
+from random import choice
+
 from timer import Timer
 from vector import Vector
 from pygame.sprite import Group, Sprite
@@ -82,6 +84,7 @@ class AlienFleet:
                 return True
         return False
 
+
     def update(self):
         delta_s = Vector(0, 0)    # don't change y position in general
         if self.check_edges():
@@ -117,6 +120,9 @@ class Alien(Sprite):
         self.v = v  # velocity
         self.dying = False
 
+        self.explosion_sound = pg.mixer.Sound("audio/explosion.wav")
+        self.explosion_sound.set_volume(0.1)
+
         self.image_list = image_list
         self.exploding_timer = Timer(image_list=AlienFleet.alien_exploding_images, delay=200,
                                      start_index=start_index, is_loop=False)
@@ -149,5 +155,6 @@ class Alien(Sprite):
 
     def hit(self):
         self.stats.alien_hit(alien=self)
+        self.explosion_sound.play()
         self.timer = self.exploding_timer
         self.dying = True

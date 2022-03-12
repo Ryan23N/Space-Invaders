@@ -30,6 +30,9 @@ class Ship(Sprite):
         self.timer = self.normal_timer
         self.dying = False
 
+        self.explosion_sound = pg.mixer.Sound("audio/explosion.wav")
+        self.explosion_sound.set_volume(0.1)
+
     def set_alien_fleet(self, alien_fleet):
         self.alien_fleet = alien_fleet
 
@@ -67,10 +70,6 @@ class Ship(Sprite):
         self.clamp()
         self.rect.centerx, self.rect.centery = self.center.x, self.center.y
 
-        if self.frames % 10 == 0 and self.firing:
-            self.lasers.fire()
-        self.frames += 1
-
     def draw(self):
         image = self.timer.image()
         rect = image.get_rect()
@@ -87,6 +86,7 @@ class Ship(Sprite):
 
     def die(self):
         self.stats.ship_hit()
+        self.explosion_sound.play()
         if self.stats.ships_left == 0:
             self.game.finished = True
         self.dying = False
