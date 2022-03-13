@@ -21,6 +21,7 @@ class Game:
                                            self.settings.screen_height))
 
         self.bg = pg.image.load("images/bg.png")
+
         self.music = pg.mixer.Sound("audio/music.mp3")
         self.music.set_volume(0.3)
         self.music.play(-1)

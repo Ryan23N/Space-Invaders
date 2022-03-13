@@ -1,8 +1,8 @@
-from random import choice
+from random import randint, choice
 
 from timer import Timer
 from vector import Vector
-from pygame.sprite import Group, Sprite
+from pygame.sprite import Group, Sprite, GroupSingle
 import pygame as pg
 
 
@@ -84,7 +84,6 @@ class AlienFleet:
                 return True
         return False
 
-
     def update(self):
         delta_s = Vector(0, 0)    # don't change y position in general
         if self.check_edges():
@@ -100,6 +99,7 @@ class AlienFleet:
             alien.update(delta_s=delta_s)
 
     def draw(self):
+
         for alien in self.fleet.sprites():
             alien.draw()
 
@@ -158,3 +158,40 @@ class Alien(Sprite):
         self.explosion_sound.play()
         self.timer = self.exploding_timer
         self.dying = True
+
+
+# class Ufo(Sprite):
+#     def __init__(self, game, side='right', screen_width=50):
+#         super().__init__()
+#         self.game = game
+#
+#
+#         # self.ufo_images = [pg.image.load(f'images/ufo{n}.png') for n in range(5)]
+#         self.ufo_images = pg.image.load(f'images/ufo0.png').convert_alpha()
+#
+#         if side == 'right':
+#             x = screen_width + 50
+#             self.speed = - 3
+#         else:
+#             x = -50
+#             self.speed = 3
+#
+#         self.rect = self.ufo_images.get_rect(topleft=(x, 80))
+#
+#         # self.ufo = GroupSingle()
+#         # self.ufo_spawn_time = randint(40, 80)
+#
+#     def ufo_timer(self):
+#         self.game.ufo_spawn_time -= 1
+#         if self.game.ufo_spawn_time <= 0:
+#             self.game.ufo.add(Ufo(choice(['right', 'left']), self.game.settings.screen_width))
+#             self.game.ufo_spawn_time = randint(400, 800)
+#
+#     def draw(self):
+#         rect = self.ufo_images.get_rect()
+#         rect.x, rect.y = self.rect.x, self.rect.y
+#         self.ufo_timer()
+#         self.game.screen.blit(self.ufo_images, self.rect)
+#
+#     def update(self):
+#         self.rect.x += self.speed
